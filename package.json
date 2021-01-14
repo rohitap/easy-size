@@ -1,0 +1,23 @@
+{
+  "name": "easy-size",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server -p=3355"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohitap/easy-size.git"
+  },
+  "author": "Rohit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rohitap/easy-size/issues"
+  },
+  "homepage": "https://github.com/rohitap/easy-size#readme",
+  "dependencies": {
+    "http-server": "^0.12.3"
+  }
+}
