@@ -25,7 +25,7 @@ const ProductSurprise = ({ handleSuprise, product }) => {
     <div className='align-center'>
       {!showLoader && (
         <div>
-          <img className='fullwidth' src={product}/>
+          <img className='product-image' src={product}/>
           <CustomButton fullWidth label='Surpise Me' onClick={onClick}/>
         </div>
       )}
