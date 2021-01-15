@@ -51,8 +51,7 @@ function Widget (configuration) {
   }
 
   const destroy = () => {
-    // remove all event handlers
-    // remove all extra items appended to DOM tree
+    window.onmessage = null
   }
 
   __initModal()
