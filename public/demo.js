@@ -1,4 +1,7 @@
 function Widget (configuration) {
+  const __PLUGIN_URL = 'http://127.0.0.1:3355/index.html'
+  const __PLACEHOLDER_ERROR = 'Placeholder element was not found. Please make sure it is mounted!'
+  
   const __config = { ...configuration }
   let __modalContainer, __modal, __placeholderBtn
 
@@ -13,7 +16,7 @@ function Widget (configuration) {
 
   const __initModal = () => {
     __modal = document.createElement('iFrame')
-    __modal.setAttribute('src', 'http://127.0.0.1:3355/index.html')
+    __modal.setAttribute('src', __PLUGIN_URL)
     __modal.setAttribute('style', 'background: white; width: 80vw; margin: auto; height: 80vh; border: none')
 
     __modalContainer = document.createElement('div')
@@ -25,7 +28,7 @@ function Widget (configuration) {
 
   const __initBtn = () => {
     __placeholderBtn = document.createElement('button')
-    __placeholderBtn.classList.add(__config.cart_button)
+    __placeholderBtn.classList.add(__config.placeholder_class)
     __placeholderBtn.style.marginTop = '1.5rem'
     __placeholderBtn.innerHTML = __config.placeholder_text
     __placeholderBtn.addEventListener('click', __handleClick)
@@ -34,16 +37,21 @@ function Widget (configuration) {
   const __eventsRegisterer = () => {
     window.onmessage = event => {
       const message = JSON.parse(event.data)
-      if (message.type === 'selectedAttribute') {
-        __config.select_attribute(message.selectedAttribute)
-        __modalContainer.style.display = 'none'
+      if (message.type !== 'selectedAttribute') return
+
+      __config.select_attribute(message.selectedAttribute)
+      __modalContainer.style.display = 'none'
+
+      const resetMessage = {
+        type: 'reset'
       }
+      __modal.contentWindow.postMessage(JSON.stringify(resetMessage), '*')
     }
   }
 
   const start = () => {
     const placeholderEl = document.querySelector(__config.placeholder)
-    if (!placeholderEl) throw new Error('Placeholder element was not found. Please make sure it is mounted!')
+    if (!placeholderEl) throw new Error(__PLACEHOLDER_ERROR)
 
     placeholderEl.appendChild(__placeholderBtn)
     document.querySelector('body').appendChild(__modalContainer)
@@ -52,6 +60,11 @@ function Widget (configuration) {
 
   const destroy = () => {
     window.onmessage = null
+    document.querySelector('body').removeChild(__modalContainer)
+    document.querySelector(__config.placeholder).removeChild(__placeholderBtn)
+    __modalContainer = null
+    __modal = null
+    __placeholderBtn = null
   }
 
   __initModal()
