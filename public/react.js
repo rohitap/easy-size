@@ -8,7 +8,7 @@ const {
   Button
 } = MaterialUI
 
-const CustomButton = ({label, onClick, fullWidth}) => (
+const CustomButton = ({ label, onClick, fullWidth }) => (
   <Button variant='contained' color='secondary' onClick={onClick} fullWidth={fullWidth}>
     {label}
   </Button>
@@ -34,7 +34,7 @@ const ProductSurprise = ({ handleSuprise, product }) => {
   )
 }
 
-const DisplayRandomAttribute = ({ attributeName, selectedAttribute }) => {
+const DisplayRandomAttribute = ({ reset, attributeName, selectedAttribute }) => {
   const handleAttributeSelect = () => {
     const message = {
       type: 'selectedAttribute',
@@ -56,8 +56,10 @@ const App = () => {
   const [attributesRandomising, setRandomising] = useState(false)
 
   window.onmessage = (event) => {
+    
     const data = JSON.parse(event.data)
     if (data.type == 'config') setConfig(data.config)
+    else setRandomising(false)
   }
 
   const randomIndex = () => Math.floor(Math.random() * config.attributes.length )
