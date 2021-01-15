@@ -17,7 +17,7 @@ function Widget (configuration) {
   const __initModal = () => {
     __modal = document.createElement('iFrame')
     __modal.setAttribute('src', __PLUGIN_URL)
-    __modal.setAttribute('style', 'background: white; width: 80vw; margin: auto; height: 80vh; border: none')
+    __modal.setAttribute('style', 'background: white; width: 80vw; margin: auto; height: 65vh; border: none')
 
     __modalContainer = document.createElement('div')
     __modalContainer.id =`${__config.placeholder}-widgetModal`
